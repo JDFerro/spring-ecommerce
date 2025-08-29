@@ -1,6 +1,7 @@
 package com.curso.ecommerce.controller;
 
 
+import org.springframework.ui.Model;
 import com.curso.ecommerce.model.Producto;
 import com.curso.ecommerce.model.Usuario;
 import com.curso.ecommerce.service.ProductoService;
@@ -23,8 +24,9 @@ public class ProductoController {
     private ProductoService productoService;
 
 
-    @GetMapping
-    public String show(){
+    @GetMapping("")
+    public String show(Model model){
+        model.addAttribute("productos", productoService.findAll());
         return "productos/show";
     }
 
