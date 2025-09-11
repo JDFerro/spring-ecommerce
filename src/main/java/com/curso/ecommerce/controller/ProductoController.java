@@ -4,7 +4,6 @@ package com.curso.ecommerce.controller;
 import com.curso.ecommerce.service.IUsuarioService;
 import com.curso.ecommerce.service.UploadFileService;
 import com.curso.ecommerce.service.UsuarioServiceImpl;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.ui.Model;
 import com.curso.ecommerce.model.Producto;
 import com.curso.ecommerce.model.Usuario;
@@ -16,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Optional;
 

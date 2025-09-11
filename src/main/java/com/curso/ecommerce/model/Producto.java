@@ -1,6 +1,7 @@
 package com.curso.ecommerce.model;
 
-import jakarta.persistence.*;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "productos")
