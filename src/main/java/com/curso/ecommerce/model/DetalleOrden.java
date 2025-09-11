@@ -1,7 +1,7 @@
 package com.curso.ecommerce.model;
 
-
-import javax.persistence.*;
+//import jakarta.persistence.*; // <-- si usas Spring Boot 3 / JPA 3
+ import javax.persistence.*; // <-- si usas Spring Boot 2 / JPA 2
 
 @Entity
 @Table(name = "detalles")
@@ -10,6 +10,7 @@ public class DetalleOrden {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     private String nombre;
     private double cantidad;
     private double precio;
@@ -21,15 +22,10 @@ public class DetalleOrden {
     @ManyToOne
     private Producto producto;
 
+    // constructor vacío
+    public DetalleOrden() {}
 
-
-    //constructor vacio
-    public DetalleOrden(){
-
-    }
-
-    //constructor con parametros
-
+    // constructor con parámetros
     public DetalleOrden(Integer id, String nombre, double cantidad, double precio, double total) {
         this.id = id;
         this.nombre = nombre;
@@ -38,66 +34,27 @@ public class DetalleOrden {
         this.total = total;
     }
 
-    //Getters and Setters
+    // getters y setters
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
 
-    public Integer getId() {
-        return id;
-    }
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    public double getCantidad() { return cantidad; }
+    public void setCantidad(double cantidad) { this.cantidad = cantidad; }
 
-    public String getNombre() {
-        return nombre;
-    }
+    public double getPrecio() { return precio; }
+    public void setPrecio(double precio) { this.precio = precio; }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+    public double getTotal() { return total; }
+    public void setTotal(double total) { this.total = total; }
 
-    public double getCantidad() {
-        return cantidad;
-    }
+    public Orden getOrden() { return orden; }
+    public void setOrden(Orden orden) { this.orden = orden; }
 
-    public void setCantidad(double cantidad) {
-        this.cantidad = cantidad;
-    }
-
-    public double getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(double precio) {
-        this.precio = precio;
-    }
-
-    public double getTotal() {
-        return total;
-    }
-
-    public void setTotal(double total) {
-        this.total = total;
-    }
-
-    public Orden getOrden() {
-        return orden;
-    }
-
-    public void setOrden(Orden orden) {
-        this.orden = orden;
-    }
-
-    public Producto getProducto() {
-        return producto;
-    }
-
-    public void setProducto(Producto producto) {
-        this.producto = producto;
-    }
-
-    //metodos toString para que devuelva el objeto completo
-
+    public Producto getProducto() { return producto; }
+    public void setProducto(Producto producto) { this.producto = producto; }
 
     @Override
     public String toString() {

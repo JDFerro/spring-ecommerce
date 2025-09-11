@@ -1,6 +1,5 @@
 package com.curso.ecommerce.model;
 
-
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -12,26 +11,32 @@ public class Orden {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(length = 50, nullable = false, unique = true) // el número de orden debe ser único
     private String numero;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "fecha_creacion", nullable = false, updatable = false)
     private Date fechaCreacion;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "fecha_recibida")
     private Date fechaRecibida;
+
+    @Column(nullable = false)
     private double total;
 
     @ManyToOne
+    @JoinColumn(name = "usuario_id", nullable = false) // clave foránea a usuarios
     private Usuario usuario;
 
-    @OneToMany(mappedBy = "orden")
+    @OneToMany(mappedBy = "orden", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DetalleOrden> detalle;
 
+    // constructor vacío
+    public Orden() {}
 
-    //contructor vacio
-
-    public Orden(){
-
-    }
-
-    //Contructor con parametros
-
+    // constructor con parámetros
     public Orden(Integer id, String numero, Date fechaCreacion, Date fechaRecibida, double total) {
         this.id = id;
         this.numero = numero;
@@ -40,8 +45,7 @@ public class Orden {
         this.total = total;
     }
 
-    //Getters and Setter
-
+    // getters y setters
     public Integer getId() {
         return id;
     }

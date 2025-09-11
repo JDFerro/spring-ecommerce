@@ -57,35 +57,38 @@ public class UsuarioController {
     @PostMapping("/acceder")
     public String acceder(Usuario usuario, HttpSession session) {
         logger.info("Accesos: {}", usuario);
-
         Optional<Usuario> user = usuarioService.finByEmail(usuario.getEmail());
-
         if (user.isPresent()) {
-            session.setAttribute("idusuario", user.get().getId());
-
-            if (user.get().getTipo().equals("ADMIN")) {
-                return "redirect:/administrador";
+            logger.info("Tipo de usuario en BD: {}", user.get().getTipo());
+            if (passEncode.matches(usuario.getPassword(), user.get().getPassword())) {
+                session.setAttribute("idusuario", user.get().getId());
+                if (user.get().getTipo().equals("ADMIN")) {
+                    logger.info("Redirigiendo a /administrador");
+                    return "redirect:/administrador";
+                } else {
+                    logger.info("Redirigiendo a /");
+                    return "redirect:/";
+                }
             } else {
-                return "redirect:/";
+                logger.info("Contraseña incorrecta");
+                return "redirect:/usuario/login?error=pass";
             }
         } else {
             logger.info("Usuario no existe");
+            return "redirect:/usuario/login?error=email";
         }
-
-        return "redirect:/";
     }
 
     @GetMapping("/compras")
     public String obtenerCompras(Model model, HttpSession session) {
-        model.addAttribute("sesion", session.getAttribute("idusuario"));
-
-        Usuario usuario = usuarioService.findById(
-                Integer.parseInt(session.getAttribute("idusuario").toString())
-        ).get();
-
+        Object idUsuarioObj = session.getAttribute("idusuario");
+        if (idUsuarioObj == null) {
+            return "redirect:/usuario/login";
+        }
+        model.addAttribute("sesion", idUsuarioObj);
+        Usuario usuario = usuarioService.findById(Integer.parseInt(idUsuarioObj.toString())).get();
         List<Orden> ordenes = ordenService.findByUsuario(usuario);
         model.addAttribute("ordenes", ordenes);
-
         return "usuario/compras";
     }
 
@@ -96,7 +99,7 @@ public class UsuarioController {
         Optional<Orden> orden = ordenService.finById(id);
         model.addAttribute("detalles", orden.get().getDetalle());
 
-        //session
+        // session
         model.addAttribute("sesion", session.getAttribute("idusuario"));
         return "usuario/detallecompra";
     }

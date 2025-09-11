@@ -51,13 +51,21 @@
           <div class="card-body">
             <h2>Registro</h2>
 
+              <div th:if="${param.error}" class="alert alert-danger">
+                <span th:switch="${param.error}">
+                    <span th:case="'email'">El correo no existe.</span>
+                    <span th:case="'pass'">Contraseña incorrecta.</span>
+                  </span>
+                  </div>
+
+
           </div>
         </div>
       </div>
     </div>
     <form th:action="@{/usuario/save}" method="post">
       <div class="form-group">
-        <label for="nombres">Nombres:</label> <input type="text"
+        <label for="nombre">Nombres:</label> <input type="text"
           class="form-control" id="nombre" name="nombre" required
           placeholder="Ingrese sus nombres" autocomplete="off">
       </div>

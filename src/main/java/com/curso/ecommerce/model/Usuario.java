@@ -1,6 +1,5 @@
 package com.curso.ecommerce.model;
 
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -11,29 +10,41 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(length = 100, nullable = false)
     private String nombre;
-    private String username;
+
+    @Column(length = 50, unique = true)
+    private String username; // nombre de usuario único para login
+
+    @Column(length = 100, nullable = false, unique = true)
     private String email;
+
+    @Column(length = 150)
     private String direccion;
+
+    @Column(length = 20)
     private String telefono;
-    private String tipo;
+
+    @Column(length = 20, nullable = false)
+    private String tipo; // ejemplo: ADMIN, USER, etc.
+
+    @Column(nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "usuario")
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Producto> productos;
 
-    @OneToMany(mappedBy = "usuario")
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Orden> ordenes;
 
-
-    //Constructor por defecto o vacio
-    public Usuario(){
+    // Constructor por defecto
+    public Usuario() {
     }
 
-
-    //constructor
-
-    public Usuario(Integer id, String nombre, String username, String email, String direccion, String telefono, String tipo, String password) {
+    // Constructor con parámetros
+    public Usuario(Integer id, String nombre, String username, String email, String direccion,
+            String telefono, String tipo, String password) {
         this.id = id;
         this.nombre = nombre;
         this.username = username;
@@ -44,10 +55,7 @@ public class Usuario {
         this.password = password;
     }
 
-
-    //Getters and Setters
-
-
+    // Getters y setters
     public Integer getId() {
         return id;
     }
@@ -118,6 +126,14 @@ public class Usuario {
 
     public void setProductos(List<Producto> productos) {
         this.productos = productos;
+    }
+
+    public List<Orden> getOrdenes() {
+        return ordenes;
+    }
+
+    public void setOrdenes(List<Orden> ordenes) {
+        this.ordenes = ordenes;
     }
 
     @Override

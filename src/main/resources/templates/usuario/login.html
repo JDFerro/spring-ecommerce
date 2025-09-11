@@ -58,8 +58,14 @@
       </div>
     </div>
 
+    <div th:if="${param.error}">
+      <div th:switch="${param.error}">
+        <div th:case="'email'" class="alert alert-danger">El correo no existe.</div>
+        <div th:case="'pass'" class="alert alert-danger">Contraseña incorrecta.</div>
+      </div>
+    </div>
     
-    <form  th:action="@{/usuario/acceder}" method="post">
+    <form th:action="@{/usuario/acceder}" method="post">
       <div class="form-group">
         <label for="email"> Email:  </label>      
         <input type="email" class="form-control" id="email" name="email" placeholder="Ingrese su email" required autocomplete="off"> 

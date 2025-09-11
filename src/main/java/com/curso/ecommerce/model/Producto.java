@@ -1,33 +1,35 @@
 package com.curso.ecommerce.model;
 
-
 import javax.persistence.*;
 
 @Entity
 @Table(name = "productos")
 public class Producto {
 
-
-    //Atributos
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(length = 100, nullable = false)
     private String nombre;
+
+    @Column(length = 500)
     private String descripcion;
+
     private String imagen;
     private double precio;
     private int cantidad;
 
     @ManyToOne
+    @JoinColumn(name = "usuario_id", nullable = false) // referencia a la tabla usuarios
     private Usuario usuario;
 
-    //Constructor vacio
-    public  Producto(){
-    }
+    // Constructor vacío
+    public Producto() {}
 
-    //Constructor con parametros
-
-    public Producto(Integer id, String nombre, String descripcion, String imagen, double precio, int cantidad, Usuario usuario) {
+    // Constructor con parámetros
+    public Producto(Integer id, String nombre, String descripcion, String imagen,
+                    double precio, int cantidad, Usuario usuario) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -37,10 +39,7 @@ public class Producto {
         this.usuario = usuario;
     }
 
-
-    //Getters and Setters
-
-
+    // Getters y Setters
     public Integer getId() {
         return id;
     }

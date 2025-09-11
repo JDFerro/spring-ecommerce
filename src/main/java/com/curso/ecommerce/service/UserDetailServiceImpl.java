@@ -39,7 +39,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
             // IMPORTANTE: usar la contraseña que ya está codificada en BD
             return User.builder()
-                    .username(usuario.getEmail())  // mejor usar email como username
+                    .username(usuario.getEmail()) // mejor usar email como username
                     .password(usuario.getPassword())
                     .roles(usuario.getTipo())
                     .build();
